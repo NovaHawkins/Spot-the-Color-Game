@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spot the Color</title>
+
+  <style>
+
+    .bingus{
+      background-color:red;
+      width:100px;
+      height:100px;
+    }
+
+.MainSet{
+  display:grid;
+  grid-template-columns:auto auto auto auto;
+  justify-content: space-around;
+  gap:5px;
+  width:30%;
+  z-index:0;
+
+  margin-left:15%;
+  margin-right:35%;
+  padding:5%;
+
+  background-color:white;
+  border: 10px groove black;
+}
+
+.mBox{
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 0;
+  padding:5px;
+  border: 3px solid black;
+  border-radius:10%;
+
+  color:black;
+
+  transition:ease 0.5s;
+}
+.iBox{
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 0;
+  padding:5px;
+  border: 3px solid black;
+  border-radius:10%;
+
+  transition:ease 0.5s;
+}
+
+.Stats{
+  display:block;
+  z-index:5;
+  float:left;
+
+  margin-left:5%;
+
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#makeRan{
+  margin:1%;
+}
+
+  </style>
+
+</head>
+<body>
+
+  <h1 id="Title">Spot the Color</h1>
+
+  <div class="Stats" id="StatsCount">
+    <div id="LifeCount">Lives: 
+
+    </div></br>
+    <div id="ScoreCount">Score: 
+
+    </div></br>
+    <div id="LvlCount">Level: 
+
+    </div>
+  </div>
+
+    <div class="MainSet" id="MainSet">
+      <div class="mBox" name="mBox" id="box1"></div>
+      <div class="mBox" name="mBox" id="box2"></div>
+      <div class="mBox" name="mBox" id="box3"></div>
+      <div class="mBox" name="mBox" id="box4"></div>
+      <div class="mBox" name="mBox" id="box5"></div>
+      <div class="mBox" name="mBox" id="box6"></div>
+      <div class="mBox" name="mBox" id="box7"></div>
+      <div class="mBox" name="mBox" id="box8"></div>
+      <div class="mBox" name="mBox" id="box9"></div>
+      <div class="mBox" name="mBox" id="box10"></div>
+      <div class="mBox" name="mBox" id="box11"></div>
+      <div class="mBox" name="mBox" id="box12"></div>
+    </div>
+
+    <div id="GameSetBtn">
+      <button id="makeRan" class="btn">Start Game</button>
+      <button id="reset" class="btn">Reset Game</button>
+    </div>
+
+</body>
+
+<script>
+
+// [/*\] ==> Code used for testing purposes, turn into a comment when finished
+
+
+
+        var a = 100 /* Declares Base Difficulty(How much the Impostor Color is able to deviate from Main Set) */
+        var lifeCount = 3 /* Declares Starting Life Value(How many times Player can screw up before game is over) */
+        var scoreCount = -10 /* Declares Base Score */
+        var lvCount = 1
+
+  // Adds Event Listeners for buttons ============================== \\
+      var startBtn = document.getElementById('makeRan')
+      startBtn.addEventListener('click', nextLvl)
+
+      var resetBtn = document.getElementById('reset')
+      resetBtn.addEventListener('click', Reset)
+  // ======================================================================== //
+
+
+/* {Next Level Code(dictates what happens per level)} */
+function nextLvl()
+    {
+      var startBtn = document.getElementById('makeRan')
+      startBtn.removeEventListener('click', nextLvl)
+
+      document.getElementById('MainSet').style.backgroundColor = ("white")
+// { }-----> [Counter Shenanigans]...........................................................{ }\\
+    // Sets Life Counter ========================================= \\
+      const lifeCountSet = document.getElementById('LifeCount')
+      lifeCountSet.textContent = ("Lives: "+lifeCount)
+    // =========================================================== //
+
+    // Sets Score Counter ======================================== \\
+      const scoreCountSet = document.getElementById('ScoreCount')
+      if (scoreCount<0){
+        scoreCount = 0
+      }
+      scoreCountSet.textContent = ("Score: "+scoreCount)
+    // =========================================================== //
+
+    // Sets Level Counter ======================================== \\
+      const lvCountSet = document.getElementById('LvlCount')
+      lvCountSet.textContent = ("Level: "+lvCount)
+    // =========================================================== //
+// { }......................................................................................{ }//
+
+// { }-----> [The main color set]...........................................................{ }\\
+      // ========== Main color generator ========== \\
+        var r = Math.floor(Math.random() * 255 + 1)
+        var g = Math.floor(Math.random() * 255 + 1)
+        var b = Math.floor(Math.random() * 255 + 1)
+      // ========================================== //
+
+      // Identifies the Main set & removes previous event listeners \\
+        var boxM1 = document.getElementById('box1')
+        var boxM2 = document.getElementById('box2')
+        var boxM3 = document.getElementById('box3')
+        var boxM4 = document.getElementById('box4')
+        var boxM5 = document.getElementById('box5')
+        var boxM6 = document.getElementById('box6')
+        var boxM7 = document.getElementById('box7')
+        var boxM8 = document.getElementById('box8')
+        var boxM9 = document.getElementById('box9')
+        var boxM10 = document.getElementById('box10')
+        var boxM11 = document.getElementById('box11')
+        var boxM12 = document.getElementById('box12')
+
+        boxM1.removeEventListener('click', nextLvl)
+        boxM2.removeEventListener('click', nextLvl)
+        boxM3.removeEventListener('click', nextLvl)
+        boxM4.removeEventListener('click', nextLvl)
+        boxM5.removeEventListener('click', nextLvl)
+        boxM6.removeEventListener('click', nextLvl)
+        boxM7.removeEventListener('click', nextLvl)
+        boxM8.removeEventListener('click', nextLvl)
+        boxM9.removeEventListener('click', nextLvl)
+        boxM10.removeEventListener('click', nextLvl)
+        boxM11.removeEventListener('click', nextLvl)
+        boxM12.removeEventListener('click', nextLvl)
+
+        boxM1.removeEventListener('click', lifeLose)
+        boxM2.removeEventListener('click', lifeLose)
+        boxM3.removeEventListener('click', lifeLose)
+        boxM4.removeEventListener('click', lifeLose)
+        boxM5.removeEventListener('click', lifeLose)
+        boxM6.removeEventListener('click', lifeLose)
+        boxM7.removeEventListener('click', lifeLose)
+        boxM8.removeEventListener('click', lifeLose)
+        boxM9.removeEventListener('click', lifeLose)
+        boxM10.removeEventListener('click', lifeLose)
+        boxM11.removeEventListener('click', lifeLose)
+        boxM12.removeEventListener('click', lifeLose)
+      // ========================================================== //
+
+      // Sets up the random color & applies it to Main set \\
+        var rgbVal = ("rgb"+"("+r+", "+g+", "+b+")")
+
+        boxM1.style.backgroundColor = rgbVal
+        boxM2.style.backgroundColor = rgbVal
+        boxM3.style.backgroundColor = rgbVal
+        boxM4.style.backgroundColor = rgbVal
+        boxM5.style.backgroundColor = rgbVal
+        boxM6.style.backgroundColor = rgbVal
+        boxM7.style.backgroundColor = rgbVal
+        boxM8.style.backgroundColor = rgbVal
+        boxM9.style.backgroundColor = rgbVal
+        boxM10.style.backgroundColor = rgbVal
+        boxM11.style.backgroundColor = rgbVal
+        boxM12.style.backgroundColor = rgbVal
+      // ================================================= //
+
+      // Changes color of box labels based on background color \\ [/*\]
+
+        var RGB = r+g+b /* Sum of RGB Values */
+/*
+        if (RGB<=370){
+          boxM1.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM2.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM3.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM4.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM5.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM6.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM7.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM8.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM9.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM10.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM11.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+          boxM12.style.color = ("rgb"+"("+255+", "+255+", "+255+")")
+        }else{
+          boxM1.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM2.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM3.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM4.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM5.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM6.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM7.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM8.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM9.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM10.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM11.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+          boxM12.style.color = ("rgb"+"("+0+", "+0+", "+0+")")
+        }
+*/
+      // ===================================================== //
+// { }......................................................................................{ }//
+  
+
+// { }-----> [Makes the Impostor Box™]......................................................{ }\\
+    // Picks a random number & applies it to 1 of the 12 boxes \\
+      var choose = Math.floor(Math.random() * 12 + 1)
+
+      if (choose===1){boxM1.id = ('boxImp')}
+      else if (choose===2){boxM2.id = ('boxImp')}
+      else if (choose===3){boxM3.id = ('boxImp')}
+      else if (choose===4){boxM4.id = ('boxImp')}
+      else if (choose===5){boxM5.id = ('boxImp')}
+      else if (choose===6){boxM6.id = ('boxImp')}
+      else if (choose===7){boxM7.id = ('boxImp')}
+      else if (choose===8){boxM8.id = ('boxImp')}
+      else if (choose===9){boxM9.id = ('boxImp')}
+      else if (choose===10){boxM10.id = ('boxImp')}
+      else if (choose===11){boxM11.id = ('boxImp')}
+      else if (choose===12){boxM12.id = ('boxImp')}
+    // ======================================================= //
+
+    // ======== Creates the Impostor Color™ ======== \\
+        // Variables for creating the Impostor Color™]
+        let n = Math.trunc(Math.random()*2 + 1) /*decides if RGB Values will be added to or subtracted from. */
+        let e = Math.floor(Math.random() * a + 15) /*decides how much RGB Values will be changed. */
+        // ------------------------------------------]
+
+        // How the Impostor Color™ is chosen]
+        if (n==1){
+          var r1 = r + e
+          var g1 = g + e
+          var b1 = b + e
+        } else if (n==2){
+          var r1 = r - e
+          var g1 = g - e
+          var b1 = b - e
+        }
+        // ---------------------------------]
+
+        // Makes sure that values are positive]
+        if (r1<=a){r1 = r + e}
+        if (g1<=a){g1 = g + e}
+        if (b1<=a){b1 = b + e}
+
+        if (r1>=255){r1 = r - e}
+        if (g1>=255){g1 = g - e}
+        if (b1>=255){b1 = b - e}
+        // -----------------------------------]
+    // ============================================= //
+
+    // =========== Declares Impostor Box™ =========== \\
+        var boxImp = document.getElementById('boxImp')
+    // ============================================== //
+
+    // === Sets Score === \\
+
+    // ================== //
+
+
+    // Identifies the RGB Values for the Main set \\ [/*\]
+/*
+          console.log("Main color: " + r, g, b)
+          console.log("RGB Values sum: "+RGB)
+*/
+    // ========================================== //
+
+    // Gives info on Impostor Box™ & how much it deviates from Main color \\ [/*\]
+/*      
+        console.log("Impostor color: " + r1, g1, b1)
+        console.log("Box chosen: box " + choose)
+        console.log("Color Change Amount: " + a)
+*/
+    // ================================================================== //
+
+
+
+    // Sets Impostor Color™ for the Impostor Box™ & generates event listener for said box \\
+        boxImp.style.backgroundColor = ("rgb"+"("+r1+", "+g1+", "+b1+")")
+        document.getElementById('boxImp').addEventListener("click", nextLvl)
+        scoreCount = scoreCount + 10
+        console.log("Score: "+scoreCount)
+        if (boxImp.click == true){document.getElementById('MainSet').style.backgroundColor = ("green")}
+    // ================================================================================== //
+// { }......................................................................................{ }//
+
+
+// { }-----> [Identifies when incorrect box is chosen]......................................{ }\\
+        if (boxM1.id = 'box1'){boxM1.addEventListener('click', lifeLose)}
+        else {boxM1.removeEventListener('click', lifeLose)}
+        if (boxM2.id = 'box2'){boxM2.addEventListener('click', lifeLose)}
+        else {boxM2.removeEventListener('click', lifeLose)}
+        if (boxM3.id = 'box3'){boxM3.addEventListener('click', lifeLose)}
+        else {boxM3.removeEventListener('click', lifeLose)}
+        if (boxM4.id = 'box4'){boxM4.addEventListener('click', lifeLose)}
+        else {boxM4.removeEventListener('click', lifeLose)}
+        if (boxM5.id = 'box5'){boxM5.addEventListener('click', lifeLose)}
+        else {boxM5.removeEventListener('click', lifeLose)}
+        if (boxM6.id = 'box6'){boxM6.addEventListener('click', lifeLose)}
+        else {boxM6.removeEventListener('click', lifeLose)}
+        if (boxM7.id = 'box7'){boxM7.addEventListener('click', lifeLose)}
+        else {boxM7.removeEventListener('click', lifeLose)}
+        if (boxM8.id = 'box8'){boxM8.addEventListener('click', lifeLose)}
+        else {boxM8.removeEventListener('click', lifeLose)}
+        if (boxM9.id = 'box9'){boxM9.addEventListener('click', lifeLose)}
+        else {boxM9.removeEventListener('click', lifeLose)}
+        if (boxM10.id = 'box10'){boxM10.addEventListener('click', lifeLose)}
+        else {boxM10.removeEventListener('click', lifeLose)}
+        if (boxM11.id = 'box11'){boxM11.addEventListener('click', lifeLose)}
+        else {boxM11.removeEventListener('click', lifeLose)}
+        if (boxM12.id = 'box12'){boxM12.addEventListener('click', lifeLose)}
+        else {boxM12.removeEventListener('click', lifeLose)}
+// { }......................................................................................{ }// 
+
+
+// { }-----> [Variable reset & final modifications].........................................{ }\\
+    // ===== Resets Box IDs ===== \\
+        boxM1.id = ('box1')
+        boxM2.id = ('box2')
+        boxM3.id = ('box3')
+        boxM4.id = ('box4')
+        boxM5.id = ('box5')
+        boxM6.id = ('box6')
+        boxM7.id = ('box7')
+        boxM8.id = ('box8')
+        boxM9.id = ('box9')
+        boxM10.id = ('box10')
+        boxM11.id = ('box11')
+        boxM12.id = ('box12')
+    // ========================== //
+
+    // Dynamic Difficulty Modifier™(increases difficulty per level) \\
+        a = Math.trunc(a-5)
+        if (a<=5){a=5}
+    // ============================================================ //
+
+    // Notifies Player that choice was correct \\
+    // ======================================= //
+// { }......................................................................................{ }//
+
+    // Increments Level =========================================== \\
+      lvCount = lvCount + 1
+    // ============================================================ //
+
+    if (scoreCount==69430){var Win = document.addEventListener('click', gameWin);   window.alert("Congrats, you've won.")}
+
+}
+
+lifeCount=3
+
+/* {Function to identify when Player has chosen the wrong box, takes away a life} */
+function lifeLose(){
+  // Sets Life Counter ========================================= \\
+    lifeCount = lifeCount - 1
+    const lifeCountSet = document.getElementById('LifeCount')
+    lifeCountSet.textContent = ("Lives: "+lifeCount)
+  // =========================================================== //
+
+      if (lifeCount===0){var GameLost = window.alert("Whoops, you lost."); GameLost = document.addEventListener('click', gameLose)}
+      else {window.alert('incorrect')}
+
+      GameLost.removeEventListener('click', gameLose)
+}
+
+
+function gameLose(){
+
+  var a = 100 /* Declares Base Difficulty(How much the Impostor Color is able to deviate from Main Set) */
+  var lifeCount = 3 /* Declares Starting Life Value(How many times Player can screw up before game is over) */
+  var scoreCount = 0 /* Declares Base Score */
+  var lvCount = 0
+
+  var reset = document.addEventListener('click', Reset)
+}
+
+function gameWin(){
+
+  var a = 100 /* Declares Base Difficulty(How much the Impostor Color is able to deviate from Main Set) */
+  var lifeCount = 3 /* Declares Starting Life Value(How many times Player can screw up before game is over) */
+  var scoreCount = 0 /* Declares Base Score */
+  var lvCount = 0
+}
+
+function Reset(){
+  var boxM1 = document.getElementById('box1')
+  var boxM2 = document.getElementById('box2')
+  var boxM3 = document.getElementById('box3')
+  var boxM4 = document.getElementById('box4')
+  var boxM5 = document.getElementById('box5')
+  var boxM6 = document.getElementById('box6')
+  var boxM7 = document.getElementById('box7')
+  var boxM8 = document.getElementById('box8')
+  var boxM9 = document.getElementById('box9')
+  var boxM10 = document.getElementById('box10')
+  var boxM11 = document.getElementById('box11')
+  var boxM12 = document.getElementById('box12')
+
+  let resetValClr = "white"
+
+  boxM1.style.backgroundColor = (resetValClr)
+  boxM2.style.backgroundColor = (resetValClr)
+  boxM3.style.backgroundColor = (resetValClr)
+  boxM4.style.backgroundColor = (resetValClr)
+  boxM5.style.backgroundColor = (resetValClr)
+  boxM6.style.backgroundColor = (resetValClr)
+  boxM7.style.backgroundColor = (resetValClr)
+  boxM8.style.backgroundColor = (resetValClr)
+  boxM9.style.backgroundColor = (resetValClr)
+  boxM10.style.backgroundColor = (resetValClr)
+  boxM11.style.backgroundColor = (resetValClr)
+  boxM12.style.backgroundColor = (resetValClr)
+
+  var a = 100 /* Declares Base Difficulty(How much the Impostor Color is able to deviate from Main Set) */
+  var lifeCount = 3 /* Declares Starting Life Value(How many times Player can screw up before game is over) */
+  var scoreCount = -10 /* Declares Base Score */
+  var lvCount = 0
+
+// Sets Life Counter ========================================= \\
+  const lifeCountSet = document.getElementById('LifeCount')
+  lifeCountSet.textContent = ("Lives: "+lifeCount)
+// =========================================================== //
+
+
+// Sets Score Counter ======================================== \\
+  const scoreCountSet = document.getElementById('ScoreCount')
+  scoreCountSet.textContent = ("Score: "+scoreCount)
+// =========================================================== //
+
+
+// Sets Level Counter ======================================== \\
+  const lvCountSet = document.getElementById('LvlCount')
+  lvCountSet.textContent = ("Level: "+lvCount)
+// =========================================================== //
+
+
+    var startBtn = document.getElementById('makeRan')
+    startBtn.addEventListener('click', nextLvl)
+}
+
+</script>
+
+</html>
